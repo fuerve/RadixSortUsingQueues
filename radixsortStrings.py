@@ -12,9 +12,12 @@ def setupAuxQueuesDictionary():
     ''' Function to set up an OrderedDictionary that has 27 queues corresponding
     to ' ' and 26 alphabets added in correct order
     '''
-
-    auxQueueDictionary = OrderedDictionary(Queue()*27)
+    queueList = []
+    for i in range(27):
+      queueList.append(Queue())
     
+    #auxQueueDictionary = OrderedDictionary((Queue()) * 27)
+    auxQueueDictionary = OrderedDictionary(queueList)
     # auxQueueDictionary.__setitem__(" ",0)
     # for char in string.ascii_lowercase:
     #     auxQueueDictionary.__setitem__(char,0)
@@ -22,8 +25,11 @@ def setupAuxQueuesDictionary():
 def updateQueue(mainQ, auxQ):
     ''' Function to add all the elements of auxQ queue to mainQ
     '''
-    for item in auxQ:
-        mainQ.update(item)
+    while not auxQ.isEmpty():
+      item = auxQ.dequeue()
+      mainQ.enqueue(item)
+    #for item in auxQ:
+    #    mainQ.update(item)
 
 def charAt(s,i):
     ''' Function to return the character at index i of string s, it should
@@ -45,7 +51,7 @@ def radixSortStrings(listOfStrings):
     # Calculate the max length so that we know how many iterations we need to do
     maxLength = 0
     auxQ = Queue()
-    for item in range(len(mainqueue)):
+    for item in range(mainqueue.size()):
         temp = mainqueue.dequeue() 
         length = len(temp)
         auxQ.enqueue(temp)
@@ -71,7 +77,7 @@ def radixSortStrings(listOfStrings):
             char = charAt(strng,index)
             auxQueueDictionary.__setitem__(char,strng)
 
-    for item in auxQueueDictionary
+    for item in auxQueueDictionary:
         temp = auxQueueDictionary.pop()
         mainqueue.enqueue(temp)
 
