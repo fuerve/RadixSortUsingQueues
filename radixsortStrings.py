@@ -2,6 +2,8 @@ from myqueue import Queue
 from orderedDictionary import OrderedDictionary
 import string
 
+auxQueueDictionary = OrderedDictionary()
+
 def testSorted(mylist):
     if (len(mylist) < 2):
         return
@@ -12,12 +14,17 @@ def setupAuxQueuesDictionary():
     ''' Function to set up an OrderedDictionary that has 27 queues corresponding
     to ' ' and 26 alphabets added in correct order
     '''
-    queueList = []
-    for i in range(27):
-      queueList.append(Queue())
+    #auxQueueDictionary = OrderedDictionary()
+    auxQueueDictionary[" "] = Queue()
+    for char in string.ascii_lowercase:
+        auxQueueDictionary[char] = Queue()
+
+    # queueList = []
+    # for i in range(27):
+      # queueList.append(Queue())
     
     #auxQueueDictionary = OrderedDictionary((Queue()) * 27)
-    auxQueueDictionary = OrderedDictionary(queueList)
+    # auxQueueDictionary = OrderedDictionary(queueList)
     # auxQueueDictionary.__setitem__(" ",0)
     # for char in string.ascii_lowercase:
     #     auxQueueDictionary.__setitem__(char,0)
@@ -72,19 +79,21 @@ def radixSortStrings(listOfStrings):
     # characters at index maxLength, then the characters at index maxLength-1,
     # maxLength-2, ...index 0. Every time using the auxiliary queues to do the sorting
     
-    for strng in mainqueue:
+    #for strng in mainqueue:
+    while not mainqueue.isEmpty:
+        strng = mainqueue.peek()
         for index in range(maxLength-1,0,-1):
             char = charAt(strng,index)
             auxQueueDictionary.__setitem__(char,strng)
 
     for item in auxQueueDictionary:
-        temp = auxQueueDictionary.pop()
+        temp = auxQueueDictionary.pop(item)
         mainqueue.enqueue(temp)
 
     sortedList = []
     # mainQueue should be sorted.
     # dequeue the items of the mainqueue into a list and return it
-    for item in range(len(mainqueue)):
+    for item in range(mainqueue.size()):
         temp = mainqueue.dequeue()
         sortedList.append(temp) 
     return sortedList
